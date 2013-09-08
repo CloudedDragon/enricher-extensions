@@ -1,5 +1,0 @@
-20:33:35.625 [main] DEBUG nl.minbzk.dwr.zoeken.enricher.processor.TikaProcessor - Given import envelope content URI is support/examples/video-content.srt
-20:33:35.627 [main] INFO  nl.minbzk.dwr.zoeken.enricher.processor.TikaProcessor - Fetching given input file support/examples/video-content.srt
-20:33:35.656 [main] DEBUG nl.minbzk.dwr.zoeken.enricher.processor.TikaProcessor - Parser detected text / srt
-20:33:35.656 [main] WARN  nl.minbzk.dwr.zoeken.enricher.processor.TikaProcessor - The envelope or encoding-hint derived language () does not fall within the list of supported languages for this job - resorting to META and n-gram detection
-20:33:35.694 [main] DEBUG nl.minbzk.dwr.zoeken.enricher.processor.TikaProcessor - Given import envelope or reference encoding is null - stream is thought to contain ISO-8859-1
