@@ -1,0 +1,29 @@
+<autn:import xmlns:autn="http://schemas.autonomy.com/aci/">
+        <autn:envelope>
+                <autn:stubidx><![CDATA[
+#DREREFERENCE http://www.rijksoverheid.nl/ministeries/eleni/documenten-en-publicaties/videos/2011/03/30/ondernemers-voelen-zich-thuis-in-vietnam.srt
+#DRETITLE 'Ondernemers voelen zich makkelijk thuis in Vietnam'
+#DREFIELD dcterms_coverage="112"
+#DREFIELD dcterms_coverage="110"
+#DREFIELD dcterms_coverage="109"
+#DREFIELD dcterms_coverage="43"
+#DREFIELD dcterms_coverage="31"
+#DREFIELD dcterms_coverage="1"
+#DREFIELD dcterms_coverage="0"
+#DREFIELD dcterms_identifier="http://www.rijksoverheid.nl/ministeries/eleni/documenten-en-publicaties/videos/2011/03/30/ondernemers-voelen-zich-thuis-in-vietnam.srt"
+#DREFIELD dcterms_author="rijksoverheidsvideo@minaz.nl"
+#DREFIELD dcterms_created="2011-03-30T03:11:51Z"
+#DREFIELD dcterms_modified="2011-06-20T02:40:38Z"
+#DREFIELD dcterms_dateSubmitted="2011-06-20T02:40:38Z"
+#DREFIELD dcterms_language=""
+#DREFIELD dcterms_relation="1"
+#DREFIELD dcterms_date="2011-03-30T03:11:51Z"
+#DREFIELD dcterms_alternative="http://server.rijksoverheidsvideo.nl/foto/ELenI-290311-2433.jpg"
+#DREENDDOC
+                ]]></autn:stubidx>
+
+                <autn:document xmlns:autn="http://schemas.autonomy.com/aci/">
+                        <autn:fetch deleteoriginal="false" url="support/examples/video-content.srt" />
+                </autn:document>
+        </autn:envelope>
+</autn:import>
