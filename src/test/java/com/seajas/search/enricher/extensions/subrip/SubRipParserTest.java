@@ -1,26 +1,14 @@
 package com.seajas.search.enricher.extensions.subrip;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import nl.minbzk.dwr.zoeken.enricher.ProcessorResult;
-import nl.minbzk.dwr.zoeken.enricher.aci.ImportEnvelope;
-import nl.minbzk.dwr.zoeken.enricher.aci.ImportEnvelopeParser;
-import nl.minbzk.dwr.zoeken.enricher.processor.PreProcessor;
-import nl.minbzk.dwr.zoeken.enricher.processor.ProcessorContext;
-import nl.minbzk.dwr.zoeken.enricher.processor.TikaProcessor;
-import nl.minbzk.dwr.zoeken.enricher.processor.preprocessor.HTMLPreProcessor;
-import nl.minbzk.dwr.zoeken.enricher.settings.EnricherSettings;
+import java.io.InputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.sax.BodyContentHandler;
+import org.apache.tika.sax.ContentHandlerDecorator;
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -36,44 +24,27 @@ public class SubRipParserTest {
 	 */
 	@Test
 	public void testSubRipParser() throws Exception {
-		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new InputStreamReader(new FileInputStream("support/examples/video-envelope.xml"), "UTF-8")));
+		InputStream inputStream = new FileInputStream("support/examples/video-content.srt");
 
-		// Create a new envelope from the static definition
+		SubRipParser parser = new SubRipParser();
 
-		ImportEnvelope envelope = ImportEnvelopeParser.parse(document).get(0);
+		Metadata metadata = new Metadata();
+		ParseContext context = new ParseContext();
+		BodyContentHandler handler = new BodyContentHandler();
 
-		// Simple load the internal configuration file twice, since we don't need any jobs within these settings
+		// Support .srt
 
-		EnricherSettings settings = new EnricherSettings("support/examples/video-enricher.properties");
+		assertTrue("Parser supports .srt", parser.getSupportedTypes(context).contains(MediaType.text("srt")));
 
-		settings.setLanguageDetectionProfiles("support" + File.separator + "profiles");
+		// Parse an srt file
 
-		// Create a new TikaProcessor to process through
+		parser.parse(inputStream, handler, metadata, context);
 
-		TikaProcessor processor = new TikaProcessor(settings);
-
-		processor.setPreprocessors(new HashMap<String, List<PreProcessor>>());
-		processor.getPreprocessors().put("html", Arrays.asList(new PreProcessor[] { new HTMLPreProcessor() }));
-
-		// Process the envelope
-
-		ProcessorResult result = processor.process(envelope, settings, settings.getJob("ProfilerWebsites"), new ProcessorContext());
-
-		// Encoding
-
-		assertEquals(result.getMimeType(), "text/srt");
-
-		// Language
-
-		assertEquals(result.getLanguage(), "nl");
-
-		// Content
-
-		assertTrue(result.getContent().get(0).getContent().startsWith("STRAATGELUIDEN"));
+		assertTrue(new ContentHandlerDecorator(handler).toString().startsWith("STRAATGELUIDEN"));
 
 		// Metadata
 
-		assertTrue(result.getMetadata().containsKey("original-content"));
-		assertTrue(result.getMetadata().get("original-content").get(0).startsWith("1"));
+		assertTrue(metadata.get("original-content") != null);
+		assertTrue(metadata.get("original-content").startsWith("1"));
 	}
 }
